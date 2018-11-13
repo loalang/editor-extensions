@@ -1,0 +1,68 @@
+{
+  "name": "vscode-loa",
+  "description": "Loa Programming Language Plugin for VSCode",
+  "license": "WTFPL",
+  "version": "0.0.1",
+  "publisher": "loalang",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:loa"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "loa",
+        "aliases": [
+          "Loa"
+        ],
+        "configuration": "./language-configuration.json",
+        "extensions": [
+          ".loa"
+        ],
+        "mimetypes": [
+          "application/loa"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "loa",
+        "scopeName": "source.loa",
+        "path": "./syntaxes/loa.tmLanguage"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Loa configuration",
+      "properties": {
+        "loa.langServerExecutable": {
+          "scope": "resource",
+          "type": "string",
+          "default": "/usr/local/bin/loas"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "package": "vsce package -o out/loa.vsix",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "update-vscode": "node ./node_modules/vscode/bin/install",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "dependencies": {
+    "vscode": "^1.1.21",
+    "vscode-languageclient": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.1.1",
+    "vsce": "^1.53.0"
+  }
+}

@@ -1,0 +1,129 @@
+# Loa Syntax Highlighter using the Iro format
+
+name                                               = loa
+file_extensions []                                 = loa;
+background_color                                   = white
+color                                              = black
+
+contexts [] {
+  main : context {
+
+    : pattern {
+      regex                                       \= (namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)
+      styles[]                                     = .keyword;
+    }
+
+    : pattern {
+      regex                                       \= ([A-Z][A-Za-z._]*'*)
+      styles[]                                     = .type;
+    }
+
+    : pattern {
+      regex                                       \= ([a-z][A-Za-z._]*'*)
+      styles[]                                     = .symbol;
+    }
+
+    : pattern {
+      regex                                       \= (//$)
+      styles[]                                     = .comment;
+    }
+    : inline_push {
+      regex                                       \= (//)
+      styles []                                    = .comment;
+      : pop {
+        regex                                     \= (.$)
+        styles []                                  = .comment;
+      }
+      : include "todo";
+      : pattern {
+        regex                                     \= ([\S\s])
+        styles[]                                   = .comment;
+      }
+    }
+    : include "multi_line_comment";
+    : pattern {
+      regex                                       \= ([\S\s])
+      styles[]                                     = .punctuation;
+    }
+  }
+
+  multi_line_comment : context {
+    description                                    = multiline
+    : inline_push {
+      regex                                       \= (/\*)
+      styles []                                    = .comment;
+      : pop {
+        regex                                     \= (\*/)
+        styles []                                  = .comment;
+      }
+      : include "nested_multi_line_comment";
+    }
+    : include "todo";
+  }
+
+  nested_multi_line_comment : context {
+    description                                    = multiline
+    : inline_push {
+      regex                                       \= (/\*)
+      styles []                                    = .comment;
+      : pop {
+        regex                                     \= (\*/)
+        styles []                                  = .comment;
+      }
+      : include "nested_multi_line_comment";
+    }
+    : include "todo";
+    : pattern {
+      regex                                       \= ([\S\s])
+      styles[]                                     = .comment;
+    }
+  }
+
+  todo : context {
+    : pattern {
+      regex                                       \= (TODO)
+      styles[]                                     = .todo;
+    }
+  }
+}
+
+styles [] {
+  .keyword : style {
+    color                 = #0066FF
+    ace_scope             = keyword
+    textmate_scope        = keyword
+    pygments_scope        = Keyword
+  }
+  .type : style {
+    color                 = #F53161
+    ace_scope             = type
+    textmate_scope        = support.type
+    pygments_scope        = Keyword.Type
+  }
+  .symbol : style {
+    ace_scope             = name
+    textmate_scope        = name.entity.variable
+    pygments_scope        = Name
+  }
+  .punctuation : style {
+    color                 = #999999
+    ace_scope             = punct
+    textmate_scope        = punct
+    pygments_scope        = Punctuation
+  }
+  .comment : style {
+    color                 = grey
+    italic                = true
+    ace_scope             = comment
+    textmate_scope        = comment
+    pygments_scope        = Comment
+  }
+  .todo : style {
+    color                 = black
+    bold                  = true
+    italic                = true
+    ace_scope             = todo
+    textmate_scope        = todo
+    pygments_scope        = Name.Builtin
+  }
+}

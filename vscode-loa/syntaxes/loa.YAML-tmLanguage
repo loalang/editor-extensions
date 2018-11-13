@@ -1,0 +1,60 @@
+fileTypes: [loa]
+name: loa
+patterns:
+- {include: '#main'}
+repository:
+  main:
+    patterns:
+    - {match: \b(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)\b,
+      name: keyword.loa}
+    - {match: '([A-Z][A-Za-z_\x{002f}]*''*)', name: type.loa}
+    - {match: '([a-z][A-Za-z_]*''*)', name: name.loa}
+    - {match: (//$), name: comment.loa}
+    - begin: (//)
+      beginCaptures:
+        '1': {name: comment.loa}
+      end: (.$)
+      endCaptures:
+        '1': {name: comment.loa}
+      patterns:
+      - {include: '#main__1'}
+    - {include: '#multi_line_comment'}
+    - {match: '([\s\S])', name: punct.loa}
+  main__1:
+    patterns:
+    - {include: '#todo'}
+    - {match: '([\s\S])', name: comment.loa}
+  multi_line_comment:
+    patterns:
+    - begin: (/\*)
+      beginCaptures:
+        '1': {name: comment.loa}
+      end: (\*/)
+      endCaptures:
+        '1': {name: comment.loa}
+      patterns:
+      - {include: '#multi_line_comment__1'}
+    - {include: '#todo'}
+  multi_line_comment__1:
+    patterns:
+    - {include: '#nested_multi_line_comment'}
+  nested_multi_line_comment:
+    patterns:
+    - begin: (/\*)
+      beginCaptures:
+        '1': {name: comment.loa}
+      end: (\*/)
+      endCaptures:
+        '1': {name: comment.loa}
+      patterns:
+      - {include: '#nested_multi_line_comment__1'}
+    - {include: '#todo'}
+    - {match: '([\s\S])', name: comment.loa}
+  nested_multi_line_comment__1:
+    patterns:
+    - {include: '#nested_multi_line_comment'}
+  todo:
+    patterns:
+    - {match: (TODO), name: todo.loa}
+scopeName: source.loa
+uuid: ''
