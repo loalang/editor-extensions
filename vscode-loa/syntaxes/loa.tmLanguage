@@ -28,7 +28,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)</string>
+          <string>\b(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)\b</string>
           <key>name</key>
           <string>keyword.loa</string>
         </dict>
@@ -40,9 +40,51 @@
         </dict>
         <dict>
           <key>match</key>
+          <string>([a-z][A-Za-z._]*&apos;*:)</string>
+          <key>name</key>
+          <string>entity.name.atom.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
           <string>([a-z][A-Za-z._]*&apos;*)</string>
           <key>name</key>
-          <string>name.entity.variable.loa</string>
+          <string>entity.name.function.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>([0-9]+(#[0-9a-zA-Z]+)*)</string>
+          <key>name</key>
+          <string>constant.numeric.loa</string>
+        </dict>
+        <dict>
+          <key>begin</key>
+          <string>(&quot;)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>string.loa</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>string.loa</string>
+          <key>end</key>
+          <string>(&quot;)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>string.loa</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(&apos;(\\.|[^\x{0027}])&apos;)</string>
+          <key>name</key>
+          <string>string.loa</string>
         </dict>
         <dict>
           <key>match</key>
@@ -65,7 +107,7 @@
           <array> 
             <dict>
               <key>include</key>
-              <string>#main__1</string>
+              <string>#main__2</string>
             </dict>
            </array>
           <key>end</key>
@@ -92,6 +134,12 @@
        </array>
     </dict>
     <key>main__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+       </array>
+    </dict>
+    <key>main__2</key>
     <dict>
       <key>patterns</key>
       <array> 

@@ -9,7 +9,7 @@ contexts [] {
   main : context {
 
     : pattern {
-      regex                                       \= (namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)
+      regex                                       \= \b(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)\b
       styles[]                                     = .keyword;
     }
 
@@ -19,8 +19,34 @@ contexts [] {
     }
 
     : pattern {
+      regex                                       \= ([a-z][A-Za-z._]*'*:)
+      styles[]                                     = .message;
+    }
+
+    : pattern {
       regex                                       \= ([a-z][A-Za-z._]*'*)
       styles[]                                     = .symbol;
+    }
+
+    : pattern {
+      regex                                       \= ([0-9]+(#[0-9a-zA-Z]+)*)
+      styles[]                                     = .number;
+    }
+    
+    : inline_push {
+      regex \= (")
+      styles[] = .string;
+      default_style = .string
+      
+      : pop {
+        regex \= (")
+        styles[] = .string;
+      }
+    }
+
+    : pattern {
+      regex                                       \= ('(\\.|[^'])')
+      styles[]                                     = .string;
     }
 
     : pattern {
@@ -94,6 +120,24 @@ styles [] {
     textmate_scope        = keyword
     pygments_scope        = Keyword
   }
+  .string : style {
+    color                 = #00AA66
+    ace_scope             = string
+    textmate_scope        = string
+    pygments_scope        = String
+  }
+  .number : style {
+    color                 = #00AA66
+    ace_scope             = number
+    textmate_scope        = constant.numeric
+    pygments_scope        = Number
+  }
+  .message : style {
+    color                 = #7700DD
+    ace_scope             = number
+    textmate_scope        = entity.name.atom
+    pygments_scope        = Number
+  }
   .type : style {
     color                 = #F53161
     ace_scope             = type
@@ -102,7 +146,7 @@ styles [] {
   }
   .symbol : style {
     ace_scope             = name
-    textmate_scope        = name.entity.variable
+    textmate_scope        = entity.name.function
     pygments_scope        = Name
   }
   .punctuation : style {
