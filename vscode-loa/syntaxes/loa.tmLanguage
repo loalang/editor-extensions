@@ -28,9 +28,39 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>\b(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)\b</string>
+          <string>\b(namespace|import|export|as|class|self|is|abstract|static|let)\b</string>
           <key>name</key>
           <string>keyword.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>\b((public|private)\s+var)\b</string>
+          <key>name</key>
+          <string>keyword.loa</string>
+        </dict>
+        <dict>
+          <key>begin</key>
+          <string>\b((public|private)(\s+init)?)\b</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.loa</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>punct.loa</string>
+          <key>end</key>
+          <string>([a-z][A-Za-z._]*&apos;*:?)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.atom.loa</string>
+            </dict>
+          </dict>
         </dict>
         <dict>
           <key>match</key>
@@ -107,7 +137,7 @@
           <array> 
             <dict>
               <key>include</key>
-              <string>#main__2</string>
+              <string>#main__3</string>
             </dict>
            </array>
           <key>end</key>
@@ -140,6 +170,12 @@
        </array>
     </dict>
     <key>main__2</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+       </array>
+    </dict>
+    <key>main__3</key>
     <dict>
       <key>patterns</key>
       <array> 

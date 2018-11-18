@@ -9,8 +9,24 @@ contexts [] {
   main : context {
 
     : pattern {
-      regex                                       \= \b(namespace|import|export|as|class|public|private|var|init|self|is|abstract|let)\b
+      regex                                       \= \b(namespace|import|export|as|class|self|is|abstract|static|let)\b
       styles[]                                     = .keyword;
+    }
+    
+    : pattern {
+      regex         \= \b((public|private)\s+var)\b
+      styles[]       = .keyword;
+    }
+    
+    : inline_push {
+      regex         \= \b((public|private)(\s+init)?)\b
+      styles[]       = .keyword;
+      default_style  = .punctuation
+      
+      : pop {
+        regex                                     \= ([a-z][A-Za-z._]*'*:?)
+        styles[]                                   = .message;
+      }
     }
 
     : pattern {
