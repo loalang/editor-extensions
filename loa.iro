@@ -19,7 +19,7 @@ contexts [] {
     }
     
     : inline_push {
-      regex         \= \b((public|private)(\s+init)?)\b
+      regex         \= \b((public|private)(\s+(init|static|abstract))?)\b
       styles[]       = .keyword;
       default_style  = .punctuation
       
