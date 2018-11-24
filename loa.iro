@@ -9,7 +9,7 @@ contexts [] {
   main : context {
 
     : pattern {
-      regex                                       \= \b(namespace|import|export|as|class|self|is|abstract|static|let)\b
+      regex                                       \= \b(namespace|import|export|as|class|self|is|abstract|static|let|async|await)\b
       styles[]                                     = .keyword;
     }
     
