@@ -1,11 +1,12 @@
 {
   "name": "vscode-loa",
+  "displayName": "Loa Programming Language",
   "description": "Loa Programming Language Plugin for VSCode",
   "license": "WTFPL",
   "version": "0.0.1",
   "publisher": "loalang",
   "engines": {
-    "vscode": "^1.28.0"
+    "vscode": "^1.38.0"
   },
   "categories": [
     "Other"
@@ -41,10 +42,10 @@
       "type": "object",
       "title": "Loa configuration",
       "properties": {
-        "loa.langServerExecutable": {
+        "loa.bin": {
           "scope": "resource",
           "type": "string",
-          "default": "/usr/local/bin/loas"
+          "default": "/usr/local/bin/loa"
         }
       }
     }
@@ -58,11 +59,12 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "dependencies": {
-    "vscode": "^1.1.21",
-    "vscode-languageclient": "^5.1.1"
+    "vscode-languageclient": "^5.2.1"
   },
   "devDependencies": {
-    "@types/node": "^10.1.1",
+    "vscode": "^1.1.36",
+    "typescript": "^3.6.4",
+    "@types/node": "^12.7.12",
     "vsce": "^1.53.0"
   }
 }

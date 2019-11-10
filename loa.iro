@@ -9,7 +9,7 @@ contexts [] {
   main : context {
 
     : pattern {
-      regex                                       \= \b(namespace|import|export|as|class|self|is|abstract|static|let|async|await)\b
+      regex                                       \= \b(namespace|import|export|as|class|self|is|partial|in|out|inout|static|let|async|await)\b
       styles[]                                     = .keyword;
     }
     
@@ -24,11 +24,18 @@ contexts [] {
       default_style  = .punctuation
       
       : pop {
-        regex                                     \= ([a-z][A-Za-z._]*'*:?)
+        regex                                     \= ([a-z][A-Za-z._]*'*:?|[+/=<>]+)
         styles[]                                   = .message;
       }
     }
 
+    : pattern {
+      regex                                       \= (//$)
+      styles[]                                     = .comment;
+    }
+    : include "multi_line_comment";
+    : include "line_comment";
+    
     : pattern {
       regex                                       \= ([A-Z][A-Za-z._]*'*)
       styles[]                                     = .type;
@@ -36,6 +43,16 @@ contexts [] {
 
     : pattern {
       regex                                       \= ([a-z][A-Za-z._]*'*:)
+      styles[]                                     = .message;
+    }
+    
+    : pattern {
+      regex                                       \= (=>|->)
+      styles[]                                     = .punctuation;
+    }
+    
+    : pattern {
+      regex                                       \= ([+/=<>]{2,})
       styles[]                                     = .message;
     }
 
@@ -47,6 +64,15 @@ contexts [] {
     : pattern {
       regex                                       \= ([0-9]+(#[0-9a-zA-Z]+)*)
       styles[]                                     = .number;
+    }
+    
+    : pattern {
+      regex                                       \= (#'[^']*')
+      styles[]                                     = .symbol_literal;
+    }
+    : pattern {
+      regex                                       \= (#[a-zA-Z_0-9:]+)
+      styles[]                                     = .symbol_literal;
     }
     
     : inline_push {
@@ -66,9 +92,12 @@ contexts [] {
     }
 
     : pattern {
-      regex                                       \= (//$)
-      styles[]                                     = .comment;
+      regex                                       \= ([\S\s])
+      styles[]                                     = .punctuation;
     }
+  }
+  
+  line_comment : context {
     : inline_push {
       regex                                       \= (//)
       styles []                                    = .comment;
@@ -76,17 +105,12 @@ contexts [] {
         regex                                     \= (.$)
         styles []                                  = .comment;
       }
-      : include "todo";
       : pattern {
         regex                                     \= ([\S\s])
         styles[]                                   = .comment;
       }
     }
-    : include "multi_line_comment";
-    : pattern {
-      regex                                       \= ([\S\s])
-      styles[]                                     = .punctuation;
-    }
+    : include "todo";
   }
 
   multi_line_comment : context {
@@ -184,6 +208,14 @@ styles [] {
     italic                = true
     ace_scope             = todo
     textmate_scope        = todo
+    pygments_scope        = Name.Builtin
+  }
+  .symbol_literal : style {
+    color                 = #7700DD
+    bold                  = false
+    italic                = false
+    ace_scope             = name
+    textmate_scope        = entity.name.atom
     pygments_scope        = Name.Builtin
   }
 }

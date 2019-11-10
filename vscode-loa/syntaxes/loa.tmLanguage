@@ -28,7 +28,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>\b(namespace|import|export|as|class|self|is|abstract|static|let|async|await)\b</string>
+          <string>\b(namespace|import|export|as|class|self|is|partial|in|out|inout|static|let|async|await)\b</string>
           <key>name</key>
           <string>keyword.loa</string>
         </dict>
@@ -52,7 +52,7 @@
           <key>contentName</key>
           <string>punct.loa</string>
           <key>end</key>
-          <string>([a-z][A-Za-z._]*&apos;*:?)</string>
+          <string>([a-z][A-Za-z._]*&apos;*:?|[\x{002b}\x{002f}\x{003d}\x{003c}\x{003e}]+)</string>
           <key>endCaptures</key>
           <dict>
             <key>1</key>
@@ -61,6 +61,20 @@
               <string>entity.name.atom.loa</string>
             </dict>
           </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(//$)</string>
+          <key>name</key>
+          <string>comment.loa</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#multi_line_comment</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#line_comment</string>
         </dict>
         <dict>
           <key>match</key>
@@ -76,6 +90,18 @@
         </dict>
         <dict>
           <key>match</key>
+          <string>(=&gt;|-&gt;)</string>
+          <key>name</key>
+          <string>punct.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>([\x{002b}\x{002f}\x{003d}\x{003c}\x{003e}]{2,})</string>
+          <key>name</key>
+          <string>entity.name.atom.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
           <string>([a-z][A-Za-z._]*&apos;*)</string>
           <key>name</key>
           <string>entity.name.function.loa</string>
@@ -85,6 +111,18 @@
           <string>([0-9]+(#[0-9a-zA-Z]+)*)</string>
           <key>name</key>
           <string>constant.numeric.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(#&apos;[^\x{0027}]*&apos;)</string>
+          <key>name</key>
+          <string>entity.name.atom.loa</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(#[a-zA-Z_0-9\x{003a}]+)</string>
+          <key>name</key>
+          <string>entity.name.atom.loa</string>
         </dict>
         <dict>
           <key>begin</key>
@@ -118,10 +156,16 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>(//$)</string>
+          <string>([\S\s])</string>
           <key>name</key>
-          <string>comment.loa</string>
+          <string>punct.loa</string>
         </dict>
+       </array>
+    </dict>
+    <key>line_comment</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
         <dict>
           <key>begin</key>
           <string>(//)</string>
@@ -137,7 +181,7 @@
           <array> 
             <dict>
               <key>include</key>
-              <string>#main__3</string>
+              <string>#line_comment__1</string>
             </dict>
            </array>
           <key>end</key>
@@ -153,13 +197,19 @@
         </dict>
         <dict>
           <key>include</key>
-          <string>#multi_line_comment</string>
+          <string>#todo</string>
         </dict>
+       </array>
+    </dict>
+    <key>line_comment__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
         <dict>
           <key>match</key>
           <string>([\S\s])</string>
           <key>name</key>
-          <string>punct.loa</string>
+          <string>comment.loa</string>
         </dict>
        </array>
     </dict>
@@ -173,22 +223,6 @@
     <dict>
       <key>patterns</key>
       <array> 
-       </array>
-    </dict>
-    <key>main__3</key>
-    <dict>
-      <key>patterns</key>
-      <array> 
-        <dict>
-          <key>include</key>
-          <string>#todo</string>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>([\S\s])</string>
-          <key>name</key>
-          <string>comment.loa</string>
-        </dict>
        </array>
     </dict>
     <key>multi_line_comment</key>

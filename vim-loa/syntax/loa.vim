@@ -11,7 +11,7 @@ syn match   loaComment          "//.*" contains=loaTodo,@Spell
 
 syn region  loaBlock            start="{" end="}" transparent fold
 
-syn keyword loaKeyword          namespace import export as class public private var init self is abstract static let
+syn keyword loaKeyword          namespace import export as class public private var init self is partial in out inout static let
 syn match   loaType             '\v[A-Z_][A-Za-z_0-9.]*\'*'
 syn match   loaVariable         '\v[a-z_][A-Za-z_0-9.]*\'*'
 syn match   loaFunction         '\v[A-Za-z_0-9]+\'*\(@='
